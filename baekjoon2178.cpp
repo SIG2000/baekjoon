@@ -31,9 +31,6 @@ int main() {
 	vector<bool> v_col(M);
 	vector<vector<bool>> visited;
 
-	arr.reserve(N);
-	visited.reserve(N);
-
 	for (i = 0; i < N; i++) {
 
 		cin >> str;
@@ -72,7 +69,7 @@ void miro(vector<vector<int>> &vec, vector<vector<bool>> &visited, int x_max, in
 
 		value = vec[x_pos][y_pos];
 
-		// »óÇÏÁÂ¿ì 0ÀÌ ¾Æ´Ï¸ç, ¹æ¹®ÇÏÁö ¾Ê¾ÒÀ» ¶§ queue¿¡ »ðÀÔ
+		// ìƒí•˜ì¢Œìš° 0ì´ ì•„ë‹ˆë©°, ë°©ë¬¸í•˜ì§€ ì•Šì•˜ì„ ë•Œ queueì— ì‚½ìž…
 
 		if (x_pos > 0)
 			if (vec[x_pos - 1][y_pos] && !visited[x_pos - 1][y_pos])
