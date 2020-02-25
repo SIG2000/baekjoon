@@ -1,3 +1,6 @@
+/*
+*	baekjoon online judge 7576 : í† ë§ˆí† 
+*/ 
 #include <iostream>	
 #include <vector>
 #include <deque>
@@ -41,7 +44,7 @@ int main() {
 			}
 	}
 
-	cout << result - 1 << endl; // ½ÃÀÛÁ¡À» 1ÀÏ·Î Àâ¾Ò´Ù.
+	cout << result - 1 << endl; // ì‹œì‘ì ì„ 1ì¼ë¡œ ì¡ì•˜ë‹¤.
 
 	return 0;
 }
@@ -59,7 +62,7 @@ int tomato(vector<vector<int>> &arr, int x_max, int y_max) {
 	deque<position> posQue;
 	int x_pos, y_pos;
 
-	// ÀÔ·ÂÇÒ¶§ ¼öÇà ÇÏ´Â °Í°ú º¹Àâµµ Â÷ÀÌ°¡ ¾øÀ½.
+	// ì…ë ¥í• ë•Œ ìˆ˜í–‰ í•˜ëŠ” ê²ƒê³¼ ë³µì¡ë„ ì°¨ì´ê°€ ì—†ìŒ.
 	for (x_pos = 0; x_pos < x_max; x_pos++) {
 		for (y_pos = 0; y_pos < y_max; y_pos++) {
 			if (arr[x_pos][y_pos] > 0) {
@@ -77,7 +80,7 @@ int tomato(vector<vector<int>> &arr, int x_max, int y_max) {
 		posQue.pop_front();
 
 		if (x_pos > 0) {
-			if (!(arr[x_pos - 1][y_pos])) { // 0ÀÏ¶§¸¸
+			if (!(arr[x_pos - 1][y_pos])) { // 0ì¼ë•Œë§Œ
 				push(arr, posQue, x_pos - 1, y_pos, arr[x_pos][y_pos]);
 			}
 		}
