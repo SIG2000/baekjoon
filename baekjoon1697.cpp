@@ -1,3 +1,6 @@
+/*
+*	baekjoon online judge 1697 : ìˆ ë˜ì¡ê¸°
+*/
 #include <iostream>	
 #include <vector>
 #include <deque>
@@ -12,7 +15,7 @@ int main() {
 	int N, K;
 	cin >> N >> K;
 
-	if (N >= K) { // °°Àº À§Ä¡¸é 0ÃÊ, NÀÌ ´õ ¾Õ¿¡ ÀÖ´Ù¸é ±× Â÷¸¸Å­
+	if (N >= K) { // ê°™ì€ ìœ„ì¹˜ë©´ 0ì´ˆ, Nì´ ë” ì•ì— ìˆë‹¤ë©´ ê·¸ ì°¨ë§Œí¼
 		cout << N - K << endl;
 		return 0;
 	}
@@ -53,7 +56,7 @@ int hideAndSeek(vector<int> &road, int N, int K) {
 		posQue.pop_front();
 
 		if (pos > 0) {
-			if (!road[pos - 1]) { // 0ÀÏ ¶§ µ¿ÀÛ
+			if (!road[pos - 1]) { // 0ì¼ ë•Œ ë™ì‘
 				if (push_and_check(road, posQue, pos - 1, road[pos], K)) {
 					return road[pos - 1];
 				}
