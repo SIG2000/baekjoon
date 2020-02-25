@@ -1,3 +1,6 @@
+/*
+*	baekjoon online judge 1012 : Ïú†Í∏∞ÎÜç Î∞∞Ï∂î
+*/
 #include <iostream>
 #include <vector>
 #include <array>
@@ -65,7 +68,7 @@ void addTest(vector<test> &input) {
 
 int check(test& t, int x, int y, int x_max, int y_max) {
 
-	if (x < 0 || y < 0 || x >= x_max || y >= y_max) return 0; // ¡æ∑· ¡∂∞«
+	if (x < 0 || y < 0 || x >= x_max || y >= y_max) return 0; // Ï¢ÖÎ£å Ï°∞Í±¥
 	if (t.location[x][y] < 1) return 0;
 
 	t.location[x][y] = 0;
@@ -73,7 +76,7 @@ int check(test& t, int x, int y, int x_max, int y_max) {
 	check(t, x - 1, y, x_max, y_max);
 	check(t, x + 1, y, x_max, y_max);
 	check(t, x, y - 1, x_max, y_max);
-	check(t, x, y + 1, x_max, y_max); // ¿ÃπÃ ƒ´øÓ∆Æ«œø© π›»Ø∞™¿ª πﬁ¡ˆæ ¿Ω
+	check(t, x, y + 1, x_max, y_max); // Ïù¥ÎØ∏ Ïπ¥Ïö¥Ìä∏ÌïòÏó¨ Î∞òÌôòÍ∞íÏùÑ Î∞õÏßÄÏïäÏùå
 
 	return 1;
 
