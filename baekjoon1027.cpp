@@ -1,3 +1,6 @@
+/*
+*	baekjoon online judge 1027 : ê³ ì¸µ ê±´ë¬¼
+*/ 
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -33,7 +36,7 @@ int view(vector<int> & building) {
 	for (int i = 0; i < size; i++) {
 		cout << endl;
 		current_height = building[i];
-		min_gradient = 1000000000; // ¹éÁØ ¾Ë°í¸®Áò¿¡¼­ 1e9 °°Àº Çü½ÄÀ» Áö¿øÇÏÁö ¾Ê´Â´Ù.
+		min_gradient = 1000000000; // ë°±ì¤€ ì•Œê³ ë¦¬ì¦˜ì—ì„œ 1e9 ê°™ì€ í˜•ì‹ì„ ì§€ì›í•˜ì§€ ì•ŠëŠ”ë‹¤.
 
 		for (int j = i - 1; j > -1; j--) {
 
