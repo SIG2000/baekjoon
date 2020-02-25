@@ -1,5 +1,5 @@
 /*
-	ÃÖÀûÈ­ 1È¸
+*	baekjoon online judge 9663 : N-Queen
 */
 #include <iostream>	
 #include <vector>
@@ -34,18 +34,18 @@ int nQueen(vector<vector<int>> &board, int x, int N, int &count) { // N = Ymax =
 
 	for (i = 0; i < N; i++) { // col[0] ~ col[N - 1]
 
-		for (j = 1; j <= x; j++) { // ÀÚ½ÅÀÇ À§ÂÊ°ú ´ë°¢¼±µéÀ» ¸ğµÎ ºñ±³
+		for (j = 1; j <= x; j++) { // ìì‹ ì˜ ìœ„ìª½ê³¼ ëŒ€ê°ì„ ë“¤ì„ ëª¨ë‘ ë¹„êµ
 
 			is_putatble = false;
 
-			if (board[x - j][i]) break; // °°Àº Çà¿¡ ³õ¿©Á® ÀÖÀ» ¶§
+			if (board[x - j][i]) break; // ê°™ì€ í–‰ì— ë†“ì—¬ì ¸ ìˆì„ ë•Œ
 
 			if (x - j > -1 && i - j > -1) {
-				if (board[x - j][i - j]) break; // ¿ŞÂÊ À§ ´ë°¢¼±¿¡ ³õ¿©Á® ÀÖÀ» ¶§
+				if (board[x - j][i - j]) break; // ì™¼ìª½ ìœ„ ëŒ€ê°ì„ ì— ë†“ì—¬ì ¸ ìˆì„ ë•Œ
 			}
 
 			if (x - j > -1 && i + j < N) {
-				if (board[x - j][i + j]) break; // ¿ŞÂÊ ¾Æ·¡ ´ë°¢¼±¿¡ ³õ¿©Á® ÀÖÀ» ¶§
+				if (board[x - j][i + j]) break; // ì™¼ìª½ ì•„ë˜ ëŒ€ê°ì„ ì— ë†“ì—¬ì ¸ ìˆì„ ë•Œ
 			}
 
 			is_putatble = true;
@@ -54,9 +54,9 @@ int nQueen(vector<vector<int>> &board, int x, int N, int &count) { // N = Ymax =
 
 		if (is_putatble) {
 
-			board[x][i]++; // ÇöÀç ÀÚ¸®¿¡ Äı ¹èÄ¡
+			board[x][i]++; // í˜„ì¬ ìë¦¬ì— í€¸ ë°°ì¹˜
 			count += nQueen(board, x + 1, N, count);
-			board[x][i]--; // ´Ù¸¥ °æ¿ìÀÇ ¼ö¸¦ Ã£±â À§ÇØ Äı È¸¼ö
+			board[x][i]--; // ë‹¤ë¥¸ ê²½ìš°ì˜ ìˆ˜ë¥¼ ì°¾ê¸° ìœ„í•´ í€¸ íšŒìˆ˜
 
 		}
 
