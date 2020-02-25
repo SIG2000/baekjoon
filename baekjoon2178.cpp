@@ -1,3 +1,7 @@
+/*
+*	baekjoon online judge 2178 : 미로찾기
+*	miro = maze
+*/
 #include <iostream>	
 #include <vector>
 #include <deque>
