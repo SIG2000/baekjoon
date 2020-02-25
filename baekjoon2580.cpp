@@ -44,7 +44,7 @@ inline void PrintResult();
 int main() {
 
 	vector<position> empty_space;
-	// °íÁ¤ ¹è¿­À» ¾²´Â °ÍÀÌ ÁÁÀ¸³ª STL ¿¬½ÀÀ» À§ÇØ »ç¿ë
+	// ê³ ì • ë°°ì—´ì„ ì“°ëŠ” ê²ƒì´ ì¢‹ìœ¼ë‚˜ STL ì—°ìŠµì„ ìœ„í•´ ì‚¬ìš©
 
 	makeSudoku(empty_space);
 	SolveSudoku(empty_space, 0);
@@ -63,7 +63,7 @@ inline void makeSudoku(vector<position> &empty_space) {
 
 					cin >> sudoku[i + k][j + l];
 
-					if (!sudoku[i + k][j + l]) // ÀÔ·Â °ªÀÌ 0ÀÏ ¶§, ºó °ø°£À¸·Î ÁöÁ¤
+					if (!sudoku[i + k][j + l]) // ì…ë ¥ ê°’ì´ 0ì¼ ë•Œ, ë¹ˆ ê³µê°„ìœ¼ë¡œ ì§€ì •
 						empty_space.push_back(position(i + k, j + l));
 
 				}
@@ -75,7 +75,7 @@ inline void makeSudoku(vector<position> &empty_space) {
 
 bool SolveSudoku(vector<position> &empty_space, int depth = 0) {
 
-	if (depth >= (int)empty_space.size()) return true; // ºó °ø°£ÀÌ ¾øÀ» ¶§ Á¾·á
+	if (depth >= (int)empty_space.size()) return true; // ë¹ˆ ê³µê°„ì´ ì—†ì„ ë•Œ ì¢…ë£Œ
 
 	int i, j, nth, idx, current, i_temp, j_temp;
 
@@ -124,7 +124,7 @@ bool SolveSudoku(vector<position> &empty_space, int depth = 0) {
 			distinct[i] = true;
 
 			if(SolveSudoku(empty_space, depth + 1))
-				return true; // ¸ğµç Ä­À» Ã¤¿üÀ» ¶§¸¦ true ¹İÈ¯
+				return true; // ëª¨ë“  ì¹¸ì„ ì±„ì› ì„ ë•Œë¥¼ true ë°˜í™˜
 			else {
 				distinct[i] = false;
 				sudoku[nth][idx] = 0;
@@ -139,10 +139,10 @@ bool SolveSudoku(vector<position> &empty_space, int depth = 0) {
 
 inline void PrintResult() {
 
-	for (int i = 0; i < SUDOKU_LINE; i += SUDOKU_LINE / 3) {
-		for (int j = 0; j < SUDOKU_LINE; j += SUDOKU_LINE / 3) {
-			for (int k = 0; k < SUDOKU_LINE / 3; k++) {
-				for (int l = 0; l < SUDOKU_LINE / 3; l++) {
+	for (int i = 0; i < SUDOKU_LINE; i += SUB_LINE) {
+		for (int j = 0; j < SUDOKU_LINE; j += SUB_LINE) {
+			for (int k = 0; k < SUB_LINE; k++) {
+				for (int l = 0; l < SUB_LINE; l++) {
 					cout << sudoku[i + k][j + l] << ' ';
 				}
 			}
