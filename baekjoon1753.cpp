@@ -9,7 +9,7 @@ using namespace std;
 
 const int MAX_INT = 2147483647;
 
-typedef struct Route {
+using Route = struct Route {
 
 	int origin;
 	int destination;
@@ -32,7 +32,7 @@ typedef struct Route {
 
 	}
 
-} Route;
+};
 
 class Compare { // function object
 public:
@@ -41,7 +41,7 @@ public:
 	}
 };
 
-typedef priority_queue<Route, vector<Route>, Compare> p_queue;
+using p_queue = priority_queue<Route, vector<Route>, Compare>;
 
 void minimum_route(vector<int> &, multimap<int, Route> &, p_queue &);
 inline void printRoute(vector<int> &, int);
@@ -102,7 +102,7 @@ void minimum_route(vector<int> &distance_table, multimap<int, Route> &graph_tabl
 	int current_stand, temp;
 	Route route;
 
-	typedef multimap<int, Route>::iterator map_iter; 
+	using map_iter = multimap<int, Route>::iterator; 
 	map_iter iter = graph_table.begin();
 
 	pair<map_iter, map_iter> pair_iter;
