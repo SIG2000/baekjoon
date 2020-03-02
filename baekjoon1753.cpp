@@ -1,160 +1,126 @@
 /*
 *	baekjoon online judge : 1753
+*	INF = INT32_MAX
 */
 #include <iostream>	
-#include <queue>
-#include <vector>
+#include <queue>	
+#include <vector>	
 #include <map>
 using namespace std;
 
-const int MAX_INT = 2147483647;
+using Edge = struct Edge {
 
-using Route = struct Route {
-
-	int origin;
 	int destination;
 	int distance;
 
-	Route& operator()(int orig, int dest, int d) {
+	Edge& operator()(int dest, int dis) {
 
-		origin = orig;
 		destination = dest;
-		distance = d;
+		distance = dis;
 
 		return *this;
-
 	}
-
-	friend istream& operator>> (istream& in, Route& route) {
-
-		cin >> route.origin >> route.destination >> route.distance;
-		return in;
-
-	}
-
 };
 
-class Compare { // function object
-public:
-	bool operator()(const Route& a, const Route& b) {
+inline istream& operator>>(istream& in, Edge& route) {
+
+	cin >> route.destination >> route.distance;
+	return in;
+}
+
+class Compare {
+public :
+	bool operator()(const Edge &a, const Edge &b) {
 		return a.distance > b.distance;
 	}
 };
 
-using p_queue = priority_queue<Route, vector<Route>, Compare>;
+using p_queue = priority_queue<Edge, vector<Edge>, Compare>;
 
-void minimum_route(vector<int> &, multimap<int, Route> &, p_queue &);
-inline void printRoute(vector<int> &, int);
+void minimumRoute(vector<int> &, multimap<int, Edge> &, int);
+inline void printeRoute(vector<int> &);
 
 int main() {
 
 	ios::sync_with_stdio(false);
 
-	Route route;
-	p_queue routeQue;
-	int root, node, stand, i;
-
-	cin >> root >> node;
-	cin >> stand;
-
-	vector<int> distance_table;
-	multimap<int, Route> graph_table;
+	int N, M, i, stand, origin; // stand = standard node
+	cin >> N >> M >> stand;
 
 	// 간선 입력
-	// ----------------------------------------------------
-	for (i = 0; i < node; i++) {
+	multimap<int, Edge> graph;
+	Edge edge;
+	for (i = 0; i < M; i++)	{
 
-		cin >> route;
-		graph_table.insert(make_pair(route.origin, route));
-
+		cin >> origin >> edge;
+		graph.insert(make_pair(origin, edge));
 	}
-	// ----------------------------------------------------
 
 	// 초기 거리 지정
-	// ----------------------------------------------------
-	i = 0;
-	while (++i < stand) {
-		distance_table.push_back(MAX_INT);
-		routeQue.push(route(0, i, MAX_INT));
-	}
-
-	distance_table.push_back(0);
-	routeQue.push(route(0, i, 0));
-
-	while (++i <= root) {
-		distance_table.push_back(MAX_INT);
-		routeQue.push(route(0, i, MAX_INT));
-	}
-	// ----------------------------------------------------
+	vector<int> distance_table(N + 1, INT32_MAX);
+	distance_table[stand] = 0;
 
 	// 최단 경로 찾기
-	minimum_route(distance_table, graph_table, routeQue);
+	minimumRoute(distance_table, graph, stand);
 
 	// 경로 출력
-	printRoute(distance_table, root);
+	printeRoute(distance_table);
 
 	return 0;
-
 }
 
-void minimum_route(vector<int> &distance_table, multimap<int, Route> &graph_table, p_queue &routeQue) {
+void minimumRoute(vector<int> &distance, multimap<int, Edge> &graph, int stand) {
 
-	int current_stand, temp;
-	Route route;
+	p_queue edgeQue;
+	const int size = static_cast<int>(distance.size());
 
-	using map_iter = multimap<int, Route>::iterator; 
-	map_iter iter = graph_table.begin();
+	Edge edge;
+	edgeQue.push(edge(stand, 0)); // 시작 위치
 
-	pair<map_iter, map_iter> pair_iter;
+	int i;
+	for (i = 0; i < stand; i++) edgeQue.push(edge(i, INT32_MAX));
+	for (++i; i < size; i++) edgeQue.push(edge(i, INT32_MAX));
+	// 나머지 위치에 infinity
 
-	vector<bool> visited(distance_table.size());
-	fill(visited.begin(), visited.end(), false);
+	vector<bool> visited(size, false);
 
-	while (!routeQue.empty()) {
+	while (!edgeQue.empty()) {
 
-		current_stand = routeQue.top().destination;
-		routeQue.pop();
-		// 가장 가까운 정점 뽑기
+		int current_stand = edgeQue.top().destination;
+		edgeQue.pop();
+		// 가까운 정점 뽑기
+		if (!visited[current_stand]) {
+			visited[current_stand] = true;
+			// ----------------------------------------------------------------------------------
+			// pair_iter = pair<multimap<int, Route>::iterator, multimap<int, Route>::iterator>
+			auto pair_iter = graph.equal_range(current_stand);
+			for (auto iter = pair_iter.first; iter != pair_iter.second; iter++) {
 
-		if (!visited[current_stand - 1]) {
-
-			visited[current_stand - 1] = true;
-			//------------------------------------------------------------------ 
-			// 해당 정점을 방문 하지 않았을 때
-			pair_iter = graph_table.equal_range(current_stand);
-
-			for (iter = pair_iter.first; iter != pair_iter.second; iter++) {
-				
-				temp = iter->second.distance + distance_table[current_stand - 1];
+				int temp = iter->second.distance + distance[current_stand];
 
 				if (temp < 0) continue; // infinity + constrant = infinity
 
-				if (distance_table[iter->second.destination - 1] > temp) {
-					distance_table[iter->second.destination - 1] = temp;
+				int dest = iter->second.destination;
+				if (distance[dest] > temp) {
+					distance[dest] = temp;
 
-					route = iter->second;
-					route.distance = temp;
-					routeQue.push(route);
-
+					edge = iter->second;
+					edge.distance = temp;
+					edgeQue.push(edge);
 				}
-				// 더 작은 비용일 때 갱신
+				// 더 작은 비용이면 갱신
 			}
 			// 현재 기준 정점에서 출발하는 노드를 우선 순위 큐에 삽입
-			//------------------------------------------------------------------
+			// ----------------------------------------------------------------------------------
 		}
 	}
 }
 
-inline void printRoute(vector<int> &distance_table, int root) {
+inline void printeRoute(vector<int> &distance) {
 
-	for (int i = 0; i < root; i++) {
+	for (auto iter = distance.begin() + 1; iter != distance.end(); iter++) {
 
-		if (distance_table[i] == MAX_INT) cout << "INF" << '\n';
-		else cout << distance_table[i] << '\n';
-
+		if (*iter == INT32_MAX) cout << "INF" << '\n';
+		else cout << *iter << '\n';
 	}
 }
-
-// <int, int>가 아닌 <int, Route>로 지정하여 메모리 2배 증가
-// 가변 배열 사용하여 시간 2배, 메모리 소폭 증가
-// 시간 복잡도 O((V + E)logE), V = 정점, E = 간선
