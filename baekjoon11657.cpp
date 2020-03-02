@@ -1,3 +1,6 @@
+/*
+*	baekjoon online judge : 11657
+*/
 #include <iostream>	
 #include <vector>	
 #include <queue>	
@@ -31,26 +34,26 @@ int main() {
 
 	multimap<int, Edge> graph;
 	vector<int> elapsed(N + 1, INT32_MAX);
-	elapsed[FIRST_CITY] = 0; // ½ÃÀÛ ³ëµå 0, ³ª¸ÓÁö ³ëµå¿ÍÀÇ °Å¸® infinity
+	elapsed[FIRST_CITY] = 0; // ì‹œì‘ ë…¸ë“œ 0, ë‚˜ë¨¸ì§€ ë…¸ë“œì™€ì˜ ê±°ë¦¬ infinity
 
 	Edge edge;
 	for (i = 0; i < M; i++) {
 		cin >> begin >> edge;
 		graph.insert(make_pair(begin, edge));
-	}	// graph »ı¼º
+	}	// graph ìƒì„±
 
 	findRoute(graph, elapsed);
-	// ÃÖ´Ü °æ·Î Ã£±â
+	// ìµœë‹¨ ê²½ë¡œ ì°¾ê¸°
 	printRoute(elapsed);
-	// °æ·Î Ãâ·Â
+	// ê²½ë¡œ ì¶œë ¥
 	return 0;
 }
 
 void findRoute(multimap<int, Edge> &graph, vector<int> &elapsed) {
 
 	const int size = static_cast<int>(elapsed.size()) + 1;
-	vector<int> cycle(size, 0); // °¢ ³ëµå º° »çÀÌÅ¬
-	vector<bool> is_exist(size, false); // °¢ ³ëµå º° Å¥¿¡ ÇöÀç Á¸Àç ¿©ºÎ
+	vector<int> cycle(size, 0); // ê° ë…¸ë“œ ë³„ ì‚¬ì´í´
+	vector<bool> is_exist(size, false); // ê° ë…¸ë“œ ë³„ íì— í˜„ì¬ ì¡´ì¬ ì—¬ë¶€
 
 	queue<int> nodeQue;
 	nodeQue.push(FIRST_CITY);
@@ -62,7 +65,7 @@ void findRoute(multimap<int, Edge> &graph, vector<int> &elapsed) {
 		is_exist[current_city] = false; 
 
 		if (cycle[current_city] >= size) {
-			// size¸¸Å­ ¼øÈ¸ÇÏ¿´À¸³ª °è¼ÓÇØ¼­ °¨¼ÒÇÒ ¶§ Ã¹ ¹øÂ° µµ½Ã¿¡ ÃÖ´ñ°ª ÁÖ°í ¸®ÅÏ
+			// sizeë§Œí¼ ìˆœíšŒí•˜ì˜€ìœ¼ë‚˜ ê³„ì†í•´ì„œ ê°ì†Œí•  ë•Œ ì²« ë²ˆì§¸ ë„ì‹œì— ìµœëŒ“ê°’ ì£¼ê³  ë¦¬í„´
 			elapsed[FIRST_CITY] = INT32_MAX;
 			return;
 		}
@@ -83,7 +86,7 @@ void findRoute(multimap<int, Edge> &graph, vector<int> &elapsed) {
 					nodeQue.push(arrive);
 					is_exist[arrive] = true;
 				}
-				// Å¥¿¡ µé¾î ÀÖÁö ¾ÊÀ» ¶§ ÀúÀå
+				// íì— ë“¤ì–´ ìˆì§€ ì•Šì„ ë•Œ ì €ì¥
 			}
 		}
 
@@ -95,7 +98,7 @@ void findRoute(multimap<int, Edge> &graph, vector<int> &elapsed) {
 inline void printRoute(vector<int> &elapsed) {
 
 	if (elapsed[FIRST_CITY] == INT32_MAX) {
-		// ¹«ÇÑÈ÷ ¿À·¡ ÀüÀ¸·Î µ¹¾Æ°¥ ¶§ ÃÖ´ñ°ªÀ» ÁÖµµ·Ï ¼³Á¤
+		// ë¬´í•œíˆ ì˜¤ë˜ ì „ìœ¼ë¡œ ëŒì•„ê°ˆ ë•Œ ìµœëŒ“ê°’ì„ ì£¼ë„ë¡ ì„¤ì •
 		cout << NOT_FOUND_OR_PAST << endl; 
 	}
 	else {
