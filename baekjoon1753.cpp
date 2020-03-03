@@ -13,7 +13,7 @@ using Edge = struct Edge {
 	int destination;
 	int distance;
 
-	bool operator()(const Edge &a, const Edge &b) {
+	bool operator()(const Edge &a, const Edge &b) const {
 		return a.distance > b.distance;
 	}
 };
@@ -40,6 +40,7 @@ int main() {
 
 	// 간선 입력
 	unordered_multimap<int, Edge> graph;
+	graph.reserve(M);
 	Edge edge;
 	for (i = 0; i < M; i++) {
 
