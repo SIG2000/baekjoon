@@ -1,55 +1,59 @@
+/*
+*	baekjoon online judge : 1931	
+*/
 #include <iostream>	
 #include <vector>
 #include <algorithm>
 using namespace std;
 
-struct Meeting { 
+struct Meeting {
 
-	int start, end; // 0 ~ INT32_MAX
+	int start, end;
+
+	Meeting(int start, int end) : start(start), end(end) {}
+	Meeting() {}
 
 	bool operator()(const Meeting &a, const Meeting &b) { // compare
 
-		return (a.end - a.start) < (b.end - b.start);
+		if (a.end == b.end) return a.start < b.start; // ÀÏÂï ³¡³ª´Â ¼ø, °°À¸¸é ½Ã°£ ½Ã°£ÀÌ ÀÌ¸¥ ¼ø
+		else return a.end < b.end;
 	}
 };
 
-istream& operator>>(istream &in, Meeting &meeting) {
-
-	cin >> meeting.start >> meeting.end;
-	return in;
-}
-
-int MaxMeetingCount(vector<Meeting> &, int N);
+int maxMeetingCount(vector<Meeting> &, int N);
 
 int main() {
 
 	ios::sync_with_stdio(false);
 
-	int N; // N = input
+	int N;
 	cin >> N;
 
+	int start, end;
 	vector<Meeting> schedule;
 	schedule.reserve(N);
-	Meeting meeting;
 	for (int i = 0; i < N; i++) {
 
-		cin >> meeting;
-		schedule.push_back(meeting);
+		cin >> start >> end;
+		schedule.emplace_back(start, end);
 	}
-	// ê° íšŒì˜ì˜ ì‹œê°„ì„ ìŠ¤ì¼€ì¤„ì— ì €ì¥
-	cout << MaxMeetingCount(schedule, N) << endl;
-	// ìµœëŒ€ë¡œ ì§„í–‰í•  ìˆ˜ ìˆëŠ” íšŒì˜ ìˆ˜ ì¶œë ¥
-	
+	// °¢ È¸ÀÇÀÇ ½Ã°£À» ½ºÄÉÁÙ¿¡ ÀúÀå
+	cout << maxMeetingCount(schedule, N) << endl;
+
 	return 0;
 }
 
-int MaxMeetingCount(vector<Meeting> &schedule, int N) {
+int maxMeetingCount(vector<Meeting> &schedule, int N) {
 
-	vector<bool> is_posible(N, true); // ê°€ë¦¬í‚¤ëŠ” ì‹œê°„ì— íšŒì˜ê°€ ê°€ëŠ¥í•œ ì§€ ì €ì¥
+	sort(schedule.begin(), schedule.end(), Meeting()); // °¡Àå »¡¸® ³¡³ª´Â È¸ÀÇ ¼øÀ¸·Î Á¤·Ä nlogn
 
-	sort(schedule.begin(), schedule.end(), Meeting()); // ìš°ì„  ì§„í–‰ ì‹œê°„ì´ ê°€ì¥ ì‘ì€ ìˆœìœ¼ë¡œ ì •ë ¬
+	int count = 0, current_time = -1; // end = ÃÖÁ¾ È¸ÀÇ°¡ ³¡³­ ÇöÀçÀÇ ½Ã°£, ÃÊ±â -1
+	for (auto const &meeting : schedule) {
 
-
-
-	return 0;
+		if (current_time > meeting.start) continue; // ÀÌÀü È¸ÀÇ¶û °ãÄ¥ ¶§
+		current_time = meeting.end;
+		
+		count++; // °³¼ö Áõ°¡
+	}
+	return count;
 }
